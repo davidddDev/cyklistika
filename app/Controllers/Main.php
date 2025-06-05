@@ -31,7 +31,7 @@ class Main extends BaseController
             ->join('cyklo_uci_tour_type', 'cyklo_uci_tour_type.id = cyklo_race_year.uci_tour', 'left')
             ->where('cyklo_race_year.category', 'E')
             ->where('cyklo_race_year.sex', 'M')
-            ->orderBy('cyklo_race_year.start_date', 'DESC')
+            ->orderBy('cyklo_race.default_name', 'ASC')
             ->findAll();
 
         $races = [];
