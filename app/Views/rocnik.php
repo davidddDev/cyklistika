@@ -12,92 +12,117 @@
     <style>
         body {
             background-color: #10141a;
-            color: #e0e0e0; 
+            color: #e0e0e0;
             font-family: "Segoe UI", sans-serif;
         }
+
+        h1 {
+            margin-bottom: 0.5rem;
+            color: #ffffff;
+            font-weight: 600;
+        }
+
+        p {
+            margin-bottom: 1.5rem;
+            color: #c0c9d6;
+        }
+
+        .card {
+            background-color: #1b1f27;
+            border: 1px solid #2d323c;
+            border-radius: 16px;
+            padding: 1.5rem;
+            margin-bottom: 2rem;
+            box-shadow: 0 0 10px rgba(0,0,0,0.3);
+        }
+
         table {
             width: 100%;
-            background-color: #1b1f27;
+            margin-bottom: 0;
             border-collapse: collapse;
-            color: #fff; 
+            color: #e8f0ff;
         }
+
         thead {
-            background-color: #242a35;
+            background-color: #2d333f;
         }
+
         thead th {
             color: #a0c8ff;
             padding: 0.75rem 1rem;
             border-bottom: 1px solid #3c3f47;
             text-align: left;
+            font-weight: 600;
         }
+
         tbody tr:nth-child(odd) {
             background-color: #1e232d;
         }
+
         tbody tr:nth-child(even) {
             background-color: #272d39;
         }
+
         tbody td {
-            padding: 0.5rem 1rem;
+            padding: 0.65rem 1rem;
             border-bottom: 1px solid #2d323c;
-            color: #e8f0ff;
         }
+
+        tbody tr:hover {
+            background-color: #323946;
+        }
+
         a {
             color: #8ecbff;
             text-decoration: none;
         }
+
         a:hover {
             text-decoration: underline;
         }
+
         .back-link {
             display: inline-block;
             margin-top: 1rem;
-            color: #8ecbff;
-            text-decoration: none;
             font-weight: 500;
-        }
-        .back-link:hover {
-            text-decoration: underline;
-        }
-        h1 {
-            margin-bottom: 1.5rem;
-            color: #fff;
-            font-weight: 600;
         }
     </style>
 </head>
 <body>
 <div class="container mt-4">
 
+    <h1>Top 20 – <?= esc($year->default_name) ?> (<?= esc($year->real_name) ?>)</h1>
+    <p><?= esc($year->start_date) ?> – <?= esc($year->end_date) ?></p>
 
-<h1>Top 20 – <?= esc($year->default_name) ?> (<?= esc($year->real_name) ?>)</h1>
-<p><?= esc($year->start_date) ?> – <?= esc($year->end_date) ?></p>
+    <?php if (!empty($results)): ?>
+        <div class="card">
+            <table>
+                <thead>
+                    <tr>
+                        <th>Pořadí</th>
+                        <th>Jezdec</th>
+                        <th>Čas</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <?php foreach ($results as $result): ?>
+                        <tr>
+                            <td><?= esc($result->rank) ?></td>
+                            <td><?= esc($result->rider_name ?? '-') ?></td>
+                            <td><?= esc($result->time) ?></td>
+                        </tr>
+                    <?php endforeach; ?>
+                </tbody>
+            </table>
+        </div>
+    <?php else: ?>
+        <div class="card">
+            <p class="mb-0">Výsledky nejsou k dispozici.</p>
+        </div>
+    <?php endif; ?>
 
-<?php if (!empty($results)): ?>
-    <table>
-        <thead>
-            <tr>
-                <th>Pořadí</th>
-                <th>Jezdec</th>
-                <th>Čas</th>
-            </tr>
-        </thead>
-        <tbody>
-            <?php foreach ($results as $result): ?>
-                <tr>
-                    <td><?= esc($result->rank) ?></td>
-                    <td><?= esc($result->rider_name ?? '-') ?></td>
-                    <td><?= esc($result->time) ?></td>
-                </tr>
-            <?php endforeach; ?>
-        </tbody>
-    </table>
-<?php else: ?>
-    <p>Výsledky nejsou k dispozici.</p>
-<?php endif; ?>
-
-
-<!-- odkaz zpet na hlavni stranku -->
-<a href="<?= base_url() ?>" class="back-link">← Zpět na přehled</a>
+    <!-- odkaz zpet na hlavni stranku -->
+    <a href="<?= base_url() ?>" class="back-link">← Zpět na přehled</a>
 
 </div>
 </body>
