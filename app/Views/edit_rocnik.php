@@ -1,8 +1,9 @@
 <!DOCTYPE html>
 <html lang="cs">
+
 <head>
     <meta charset="UTF-8">
-    <title>Editace ročníku</title>
+    <title>Editace rocniku</title>
     <link rel="stylesheet" href="<?= base_url('node_modules/flag-icons/css/flag-icons.min.css') ?>" />
     <link rel="stylesheet" href="<?= base_url('node_modules/bootstrap/dist/css/bootstrap.min.css') ?>" />
     <script src="<?= base_url('node_modules/bootstrap/dist/js/bootstrap.bundle.min.js') ?>"></script>
@@ -12,76 +13,131 @@
             color: #e0e0e0;
             font-family: "Segoe UI", sans-serif;
         }
+
         .card {
             background-color: #1b1f27;
             border: 1px solid #2d323c;
             border-radius: 12px;
-            margin-bottom: 2rem;
+            box-shadow: 0 0 15px rgba(0, 0, 0, 0.5);
         }
+
         .card-header {
             background-color: #242a35;
             color: #fff;
+            font-size: 1.3rem;
+            font-weight: 500;
             border-bottom: 1px solid #3c3f47;
-            font-size: 1.2rem;
         }
-        .table {
-            background-color: #1e232d;
+
+        label {
+            font-weight: 500;
+            margin-bottom: 0.4rem;
         }
-        .table thead {
-            background-color: #2d333f;
+
+        .form-control,
+        .form-select {
+            background-color: #2a2f3a;
+            color: #e0e0e0;
+            border: 1px solid #3c414e;
         }
-        .table th {
-            color: #a0c8ff;
+
+        .form-control:focus,
+        .form-select:focus {
+            background-color: #2a2f3a;
+            color: #fff;
+            border-color: #6ca0f6;
+            box-shadow: 0 0 0 0.25rem rgba(108, 160, 246, 0.25);
         }
-        .table-results {
-            background-color: #272d39;
-            margin-top: 0.5rem;
+
+        .btn-primary {
+            background-color: #4a90e2;
+            border-color: #4a90e2;
         }
+
+        .btn-primary:hover {
+            background-color: #3973b7;
+            border-color: #3973b7;
+        }
+
+        .btn-secondary {
+            background-color: #3c3f47;
+            border-color: #3c3f47;
+            color: #ccc;
+        }
+
+        .btn-secondary:hover {
+            background-color: #2e3138;
+            border-color: #2e3138;
+        }
+
         a {
             color: #8ecbff;
             text-decoration: none;
         }
+
         a:hover {
             text-decoration: underline;
         }
     </style>
 </head>
 
-<body class="bg-dark text-white">
-<div class="container mt-5">
-    <h1>Editace ročníku – <?= esc($year->default_name) ?></h1>
+<body>
+    <div class="container py-5">
+        <div class="row justify-content-center">
+            <div class="col-lg-7 col-md-10">
+                <div class="card">
+                    <!-- hlavicka karty -->
+                    <div class="card-header">
+                        Editace rocniku – <?= ($year->default_name) ?>
+                    </div>
+                    <div class="card-body">
+                        <!-- formular pro editaci rocniku -->
+                        <form method="post" action="<?= base_url("rocnik/update/" . $year->id) ?>">
+                            <!-- pole pro nazev rocniku -->
+                            <div class="mb-3">
+                                <label for="real_name" class="form-label">Nazev rocniku</label>
+                                <input type="text" name="real_name" id="real_name" class="form-control" value="<?= ($year->real_name) ?>">
+                            </div>
 
-    <form method="post" action="<?= base_url("rocnik/update/" . $year->id) ?>">
-        <div class="mb-3">
-            <label for="real_name" class="form-label">Název ročníku</label>
-            <input type="text" name="real_name" id="real_name" class="form-control" value="<?= esc($year->real_name) ?>">
+                            <!-- pole pro datum zacatku -->
+                            <div class="mb-3">
+                                <label for="start_date" class="form-label">Datum zacatku</label>
+                                <input type="date" name="start_date" id="start_date" class="form-control" value="<?= ($year->start_date) ?>">
+                            </div>
+
+                            <!-- pole pro datum konce -->
+                            <div class="mb-3">
+                                <label for="end_date" class="form-label">Datum konce</label>
+                                <input type="date" name="end_date" id="end_date" class="form-control" value="<?= ($year->end_date) ?>">
+                            </div>
+
+                            <!-- pole pro vyberUCI Tour -->
+                            <div class="mb-4">
+                                <label for="uci_tour" class="form-label">UCI Tour</label>
+                                <select name="uci_tour" id="uci_tour" class="form-select">
+                                    <!-- vychozi moznost -->
+                                    <option value="">— Vyberte —</option>
+                                    <!-- cyklus pro vypis vsech moznosti UCI Tour -->
+                                    <?php foreach ($uciTourTypes as $type): ?>
+                                        <!-- moznost UCI Tour -->
+                                        <option value="<?= $type->id ?>" <?= $year->uci_tour == $type->id ? 'selected' : '' ?>>
+                                            <?= ($type->name) ?>
+                                        </option>
+                                    <?php endforeach; ?>
+                                </select>
+                            </div>
+
+                            <!-- tlacitka pro odeslani a navrat -->
+                            <div class="d-flex justify-content-between">
+                                <a href="<?= base_url() ?>" class="btn btn-secondary">Zpet</a>
+                                <button type="submit" class="btn btn-primary">Ulozit zmeny</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
         </div>
-
-        <div class="mb-3">
-            <label for="start_date" class="form-label">Datum začátku</label>
-            <input type="date" name="start_date" id="start_date" class="form-control" value="<?= esc($year->start_date) ?>">
-        </div>
-
-        <div class="mb-3">
-            <label for="end_date" class="form-label">Datum konce</label>
-            <input type="date" name="end_date" id="end_date" class="form-control" value="<?= esc($year->end_date) ?>">
-        </div>
-
-        <div class="mb-3">
-            <label for="uci_tour" class="form-label">UCI Tour</label>
-            <select name="uci_tour" id="uci_tour" class="form-select">
-                <option value="">— Vyberte —</option>
-                <?php foreach ($uciTourTypes as $type): ?>
-                    <option value="<?= $type->id ?>" <?= $year->uci_tour == $type->id ? 'selected' : '' ?>>
-                        <?= esc($type->name) ?>
-                    </option>
-                <?php endforeach; ?>
-            </select>
-        </div>
-
-        <button type="submit" class="btn btn-primary">Uložit změny</button>
-        <a href="<?= base_url("rocnik/" . $year->id) ?>" class="btn btn-secondary">Zpět</a>
-    </form>
-</div>
+    </div>
 </body>
+
 </html>

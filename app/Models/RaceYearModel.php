@@ -10,9 +10,19 @@ class RaceYearModel extends Model
     protected $primaryKey       = 'id';
     protected $useAutoIncrement = true;
     protected $returnType       = 'object';
-    protected $useSoftDeletes   = false;
+    protected $useSoftDeletes   = true;
     protected $protectFields    = true;
-    protected $allowedFields    = [];
+    protected $allowedFields    = ['real_name',
+        'id_race',
+        'year',
+        'start_date',
+        'end_date',
+        'uci_tour',
+        'logo',
+        'sex',
+        'category',
+        'country',
+        'deleted_at'];
 
     protected bool $allowEmptyInserts = false;
     protected bool $updateOnlyChanged = true;
@@ -21,8 +31,8 @@ class RaceYearModel extends Model
     protected array $castHandlers = [];
 
     // Dates
-    protected $useTimestamps = false;
-    protected $dateFormat    = 'datetime';
+    protected $useTimestamps = true;
+    protected $dateFormat    = 'int';
     protected $createdField  = 'created_at';
     protected $updatedField  = 'updated_at';
     protected $deletedField  = 'deleted_at';

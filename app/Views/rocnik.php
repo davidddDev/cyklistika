@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="cs">
+
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
@@ -33,7 +34,7 @@
             border-radius: 16px;
             padding: 1.5rem;
             margin-bottom: 2rem;
-            box-shadow: 0 0 10px rgba(0,0,0,0.3);
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
         }
 
         table {
@@ -88,42 +89,52 @@
         }
     </style>
 </head>
+
 <body>
-<div class="container mt-4">
+    <div class="container mt-4">
+        <!-- hlavni nadpis -->
+        <h1>Top 20 – <?= ($year->default_name) ?> (<?= ($year->real_name) ?>)</h1>
+        <!-- datum rocniku -->
+        <p><?= ($year->start_date) ?> – <?= ($year->end_date) ?></p>
 
-    <h1>Top 20 – <?= esc($year->default_name) ?> (<?= esc($year->real_name) ?>)</h1>
-    <p><?= esc($year->start_date) ?> – <?= esc($year->end_date) ?></p>
-
-    <?php if (!empty($results)): ?>
-        <div class="card">
-            <table>
-                <thead>
-                    <tr>
-                        <th>Pořadí</th>
-                        <th>Jezdec</th>
-                        <th>Čas</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <?php foreach ($results as $result): ?>
+        <!-- pokud jsou vysledky, vypiseme je -->
+        <?php if (!empty($results)): ?>
+            <div class="card">
+                <table>
+                    <thead>
                         <tr>
-                            <td><?= esc($result->rank) ?></td>
-                            <td><?= esc($result->rider_name ?? '-') ?></td>
-                            <td><?= esc($result->time) ?></td>
+                            <th>Pořadí</th>
+                            <th>Jezdec</th>
+                            <th>Čas</th>
                         </tr>
-                    <?php endforeach; ?>
-                </tbody>
-            </table>
-        </div>
-    <?php else: ?>
-        <div class="card">
-            <p class="mb-0">Výsledky nejsou k dispozici.</p>
-        </div>
-    <?php endif; ?>
+                    </thead>
+                    <tbody>
+                        <!-- cyklus pro vypis vsech vysledku -->
+                        <?php foreach ($results as $result): ?>
+                            <tr>
+                                <!-- poradi -->
+                                <td><?= ($result->rank) ?></td>
+                                <!-- jezdec -->
+                                <td><?= ($result->rider_name ?? '-') ?></td>
+                                <!-- cas -->
+                                <td><?= ($result->time) ?></td>
+                            </tr>
+                        <?php endforeach; ?>
+                    </tbody>
+                </table>
+            </div>
+        <!-- pokud nejsou vysledky, vypiseme zprávu -->
+        <?php else: ?>
+            <!-- karta pro zprávu -->
+            <div class="card">
+                <p class="mb-0">Výsledky nejsou k dispozici.</p>
+            </div>
+        <?php endif; ?>
 
-    <!-- odkaz zpet na hlavni stranku -->
-    <a href="<?= base_url() ?>" class="back-link">← Zpět na přehled</a>
+        <!-- odkaz zpet na hlavni stranku -->
+        <a href="<?= base_url() ?>" class="back-link">← Zpět na přehled</a>
 
-</div>
+    </div>
 </body>
+
 </html>

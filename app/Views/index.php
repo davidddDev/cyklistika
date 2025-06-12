@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="cs">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -27,7 +28,7 @@
             border: 1px solid #2d323c;
             border-radius: 16px;
             margin-bottom: 2rem;
-            box-shadow: 0 0 10px rgba(0,0,0,0.3);
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
         }
 
         .card-header {
@@ -53,7 +54,8 @@
             font-weight: 600;
         }
 
-        .table td, .table th {
+        .table td,
+        .table th {
             vertical-align: middle;
             padding: 0.75rem;
         }
@@ -85,55 +87,63 @@
 </head>
 
 <body>
-<div class="container mt-4">
+    <div class="container mt-4">
+        <h1>Elite závody mužů</h1>
 
-    <h1>Elite závody mužů</h1>
-
-    <?php foreach ($races as $race): ?>
-        <div class="card">
-            <div class="card-header">
-                <?php if (!empty($race->info->country)): ?>
-                    <span class="fi fi-<?= strtolower(esc($race->info->country)) ?> flag-icon"></span>&nbsp;
-                <?php endif; ?>
-                <?= esc($race->info->default_name) ?>
-            </div>
-            <div class="card-body p-0">
-                <table class="table table-sm table-dark table-striped table-hover mb-0">
-                    <thead>
-                        <tr>
-                            <th>Ročník</th>
-                            <th>Datum</th>
-                            <th>UCI Tour</th>
-                            <th>Top 20 výsledků</th>
-                            <th>Upravit</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <?php foreach ($race->years as $year): ?>
+        <!-- cyklus pro vypis vsech zavodu -->
+        <?php foreach ($races as $race): ?>
+            <div class="card">
+                <div class="card-header">
+                    <!-- pokud je nastavena zeme, vypiseme ji jako vlajku -->
+                    <?php if (!empty($race->info->country)): ?>
+                        <span class="fi fi-<?= strtolower(($race->info->country)) ?> flag-icon"></span>&nbsp;
+                    <?php endif; ?>
+                    <?= ($race->info->default_name) ?>
+                </div>
+                <div class="card-body p-0">
+                    <!-- tabulka s rocniky zavodu -->
+                    <table class="table table-sm table-dark table-striped table-hover mb-0">
+                        <thead>
                             <tr>
-                                <td>
-                                    <a href="<?= base_url('rocnik/' . $year->id) ?>">
-                                        <?= esc($year->real_name) ?>
-                                    </a>
-                                </td>
-                                <td><?= esc($year->start_date) ?> – <?= esc($year->end_date) ?></td>
-                                <td><?= esc($year->uci_tour_name ?? '-') ?></td>
-                                <td>
-                                    <a href="<?= base_url('rocnik/' . $year->id) ?>">Zobrazit výsledky</a>
-                                </td>
-                                <td>
-                                    <a href="<?= base_url('rocnik/edit/' . $year->id) ?>" class="btn btn-sm btn-outline-info">
-                                        Upravit ročník
-                                    </a>
-                                </td>
+                                <th>Ročník</th>
+                                <th>Datum</th>
+                                <th>UCI Tour</th>
+                                <th>Top 20 výsledků</th>
+                                <th>Upravit</th>
                             </tr>
-                        <?php endforeach; ?>
-                    </tbody>
-                </table>
+                        </thead>
+                        <tbody>
+                            <!-- cyklus pro vypis vsech rocniku zavodu -->
+                            <?php foreach ($race->years as $year): ?>
+                                <tr>
+                                    <!-- nazev rocniku -->
+                                    <td>
+                                        <a href="<?= base_url('rocnik/' . $year->id) ?>">
+                                            <?= ($year->real_name) ?>
+                                        </a>
+                                    </td>
+                                    <!-- datum rocniku -->
+                                    <td><?= ($year->start_date) ?> – <?= ($year->end_date) ?></td>
+                                    <!-- uci tour rocniku -->
+                                    <td><?= ($year->uci_tour_name ?? '-') ?></td>
+                                    <!-- odkaz na vysledky rocniku -->
+                                    <td>
+                                        <a href="<?= base_url('rocnik/' . $year->id) ?>">Zobrazit výsledky</a>
+                                    </td>
+                                    <!-- odkaz na editaci rocniku -->
+                                    <td>
+                                        <a href="<?= base_url('rocnik/edit/' . $year->id) ?>" class="btn btn-sm btn-outline-info">
+                                            Upravit ročník
+                                        </a>
+                                    </td>
+                                </tr>
+                            <?php endforeach; ?>
+                        </tbody>
+                    </table>
+                </div>
             </div>
-        </div>
-    <?php endforeach; ?>
-
-</div>
+        <?php endforeach; ?>
+    </div>
 </body>
+
 </html>
