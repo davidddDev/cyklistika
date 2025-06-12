@@ -80,7 +80,7 @@ class Main extends BaseController
 
         // ziskame vysledky typu 4 = celkove poradi po etape
         $results = $this->resultModel
-            ->select('cyklo_result.*, CONCAT(cyklo_rider.first_name, " ", cyklo_rider.last_name) AS rider_name')
+            ->select('cyklo_result.*, cyklo_rider.first_name, cyklo_rider.last_name, cyklo_rider.country')
             ->join('cyklo_rider', 'cyklo_rider.id = cyklo_result.id_rider', 'left')
             ->where('cyklo_result.id_stage', $id)
             ->where('cyklo_result.type_result', 4)

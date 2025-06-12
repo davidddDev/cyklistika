@@ -115,7 +115,10 @@
                                 <!-- poradi -->
                                 <td><?= ($result->rank) ?></td>
                                 <!-- jezdec -->
-                                <td><?= ($result->rider_name ?? '-') ?></td>
+                                <td>
+                                    <span class="flag-icon fi fi-<?php echo strtolower($result->country); ?>"></span>&nbsp;
+                                    <?= ($result->first_name . ' ' . $result->last_name) ?>
+                                </td>
                                 <!-- cas -->
                                 <td><?= ($result->time) ?></td>
                             </tr>
@@ -123,7 +126,7 @@
                     </tbody>
                 </table>
             </div>
-        <!-- pokud nejsou vysledky, vypiseme zprávu -->
+            <!-- pokud nejsou vysledky, vypiseme zprávu -->
         <?php else: ?>
             <!-- karta pro zprávu -->
             <div class="card">
