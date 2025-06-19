@@ -96,7 +96,7 @@
                 <div class="card-header">
                     <!-- pokud je nastavena zeme, vypiseme ji jako vlajku -->
                     <?php if (!empty($race->info->country)): ?>
-                        <span class="fi fi-<?= strtolower(($race->info->country)) ?> flag-icon"></span>&nbsp;
+                        <span class="fi fi-<?= strtolower(($race->info->country)) ?> flag-icon"></span>
                     <?php endif; ?>
                     <?= ($race->info->default_name) ?>
                 </div>
